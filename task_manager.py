@@ -1,6 +1,6 @@
 import os, json
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, simpledialog
 
 #TODO implementar visual
 #TODO tag de progresso? não iniciado/ em andamento/ concluido 
@@ -29,10 +29,17 @@ class Planner:
         self.task_listbox = tk.Listbox(root, width=50, height=15)
         self.task_listbox.pack(pady=10)
         
+        button_frame = tk.Frame(root)
+        button_frame.pack(pady=10)  
+
+        # Botão para criar
+        self.create_button = tk.Button(button_frame, text="Adicionar Tarefa", command=self.create_task_popup)
+        self.create_button.pack(side=tk.LEFT, padx=10)
+        
         # Botão para carregar
-        self.load_button = tk.Button(root, text="Carregar Tarefas", command=self.display_tasks)
-        self.load_button.pack()
-                
+        self.load_button = tk.Button(button_frame, text="Carregar Tarefas", command=self.display_tasks)
+        self.load_button.pack(side=tk.LEFT, padx=10)
+        
     #def clear_screen(self):
         # da um cls no terminal, quando for pro visual isso sai
         #os.system("cls" if os.name == "nt" else "clear")
@@ -80,22 +87,38 @@ class Planner:
         with open(self.FILE_NAME, "w") as file:
             json.dump(self.tasks, file, indent=4)
 
-    def create_task(self):
+   #def create_task(self):
         # cria uma nova tarefa se o ID não for repetir, adiciona uma descrição
-        task_id = input ("Entre o ID da tarefa: ").strip()
+        #task_id = input ("Entre o ID da tarefa: ").strip()
+        #if not task_id or task_id in self.tasks:
+            #print("ID da tarefa não pode ser vazio ou repetido")
+            #return
+
+        #task_desc = input("Insira a descrição da tarefa: ").strip()
+        #if not task_desc:
+            #print("Descrição da tarefa não pode ser vazia")
+            #return 
+        
+        #self.tasks[task_id] = task_desc
+        #self.save_tasks()
+        #print(f"Tarefa {task_id} adicionada com sucesso")
+
+    def create_task_popup(self):
+        task_id = simpledialog.askstring("ID da Tarefa", "Insira o ID da tarefa:")
         if not task_id or task_id in self.tasks:
-            print("ID da tarefa não pode ser vazio ou repetido")
+            messagebox.showerror("Erro", "ID da tarefa não pode ser vazio ou repetido.")
+            return
+        
+        task_desc = simpledialog.askstring("Descrição da Tarefa", "Insira a descrição da tarefa:")
+        if not task_desc:
+            messagebox.showerror("Erro", "Descrição da tarefa não pode ser vazia.")
             return
 
-        task_desc = input("Insira a descrição da tarefa: ").strip()
-        if not task_desc:
-            print("Descrição da tarefa não pode ser vazia")
-            return 
-        
         self.tasks[task_id] = task_desc
         self.save_tasks()
-        print(f"Tarefa {task_id} adicionada com sucesso")
-
+        messagebox.showinfo("Sucesso", f"Tarefa '{task_id}' adicionada com sucesso.")
+        self.display_tasks()
+    
     def read_tasks(self):
         # Le as tarefas registradas no arquivo
         if not self.tasks:
