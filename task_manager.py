@@ -40,9 +40,9 @@ class Planner:
         self.load_button = tk.Button(button_frame, text="Carregar Tarefas", command=self.display_tasks)
         self.load_button.pack(side=tk.LEFT, padx=10)
         
-    #def clear_screen(self):
-        # da um cls no terminal, quando for pro visual isso sai
-        #os.system("cls" if os.name == "nt" else "clear")
+        # Botão para atualizar tarefa
+        self.update_button = tk.Button(button_frame, text="Atualizar Tarefa", command=self.update_task_popup)
+        self.update_button.pack(side=tk.LEFT, padx=10)
 
     def load_tasks(self):
         if not os.path.exists(self.FILE_NAME):
@@ -87,22 +87,6 @@ class Planner:
         with open(self.FILE_NAME, "w") as file:
             json.dump(self.tasks, file, indent=4)
 
-   #def create_task(self):
-        # cria uma nova tarefa se o ID não for repetir, adiciona uma descrição
-        #task_id = input ("Entre o ID da tarefa: ").strip()
-        #if not task_id or task_id in self.tasks:
-            #print("ID da tarefa não pode ser vazio ou repetido")
-            #return
-
-        #task_desc = input("Insira a descrição da tarefa: ").strip()
-        #if not task_desc:
-            #print("Descrição da tarefa não pode ser vazia")
-            #return 
-        
-        #self.tasks[task_id] = task_desc
-        #self.save_tasks()
-        #print(f"Tarefa {task_id} adicionada com sucesso")
-
     def create_task_popup(self):
         task_id = simpledialog.askstring("ID da Tarefa", "Insira o ID da tarefa:")
         if not task_id or task_id in self.tasks:
@@ -118,17 +102,55 @@ class Planner:
         self.save_tasks()
         messagebox.showinfo("Sucesso", f"Tarefa '{task_id}' adicionada com sucesso.")
         self.display_tasks()
+        
+    def update_task_popup(self):
+        # Janela nova
+        update_window = tk.Toplevel(self.root)
+        update_window.title("Atualizar Tarefa")
     
-    def read_tasks(self):
-        # Le as tarefas registradas no arquivo
-        if not self.tasks:
-            print("Nenhuma tarefa registrada / disponivel")
-            return
+        task_id_label = tk.Label(update_window, text="ID da Tarefa:")
+        task_id_label.pack(pady=5)
+        task_id_entry = tk.Entry(update_window)
+        task_id_entry.pack(pady=5)
 
-        print("\n Tarefas Atuais: ")
-        for task_id, task_desc in self.tasks.items():
-            print(f" {task_id}: {task_desc} ")
-        print()
+        new_desc_label = tk.Label(update_window, text="Nova Descrição:")
+        new_desc_label.pack(pady=5)
+        new_desc_entry = tk.Entry(update_window)
+        new_desc_entry.pack(pady=5)
+    
+        def update_task():
+            task_id = task_id_entry.get().strip()
+            new_desc = new_desc_entry.get().strip()
+
+            if not task_id or task_id not in self.tasks:
+                messagebox.showerror("Erro", "ID de tarefa não encontrado!")
+                return
+        
+            if not new_desc:
+                messagebox.showerror("Erro", "Descrição não pode ser vazia!")
+                return
+        
+            self.tasks[task_id] = new_desc
+            self.save_tasks()
+            messagebox.showinfo("Sucesso", f"Tarefa '{task_id}' atualizada com sucesso!")
+            
+            self.display_tasks()
+            update_window.destroy()  # Fecha janela
+
+        # Update Button
+        update_button = tk.Button(update_window, text="Atualizar", command=update_task)
+        update_button.pack(pady=10)
+    
+    #def read_tasks(self):
+        # Le as tarefas registradas no arquivo
+        #if not self.tasks:
+            #print("Nenhuma tarefa registrada / disponivel")
+            #return
+
+        #print("\n Tarefas Atuais: ")
+        #for task_id, task_desc in self.tasks.items():
+            #print(f" {task_id}: {task_desc} ")
+        #print()
 
     def update_task(self):
         # Atualiza uma tarefa especificada no arquivo
@@ -194,5 +216,4 @@ class Planner:
 if __name__ == "__main__":
     root = tk.Tk()
     planner = Planner(root)
-    #planner.menu()
     root.mainloop()
