@@ -17,24 +17,63 @@ class Planner:
         
         self.tasks = {}
         self.load_tasks()
+        print("DEBUG", self.tasks)
+        
         
         self.label = tk.Label(root, text="Gerenciador de Tarefas", font=(
             "Arial", 14, "bold"
         ))
+        self.label.pack(pady=10)
         
+        # Lista de Tarefas
+        self.task_listbox = tk.Listbox(root, width=50, height=15)
+        self.task_listbox.pack(pady=10)
+        
+        # Botão para carregar
+        self.load_button = tk.Button(root, text="Carregar Tarefas", command=self.display_tasks)
+        self.load_button.pack()
+                
     #def clear_screen(self):
         # da um cls no terminal, quando for pro visual isso sai
         #os.system("cls" if os.name == "nt" else "clear")
 
     def load_tasks(self):
-        # puxa o arquivo que salva as tarefas
-        if os.path.exists(self.FILE_NAME):
-            try:
-                with open(self.FILE_NAME, "r") as file:
-                    self.tasks = json.load(file)
-            except json.JSONDecodeError:
-                # se não conseguir abrir , cria um novo
-                self.tasks = {}
+        if not os.path.exists(self.FILE_NAME):
+            print("DEBUG - Arquivo tasks.txt não encontrado. Criando um novo...")
+            with open(self.FILE_NAME, "w") as file:
+                json.dump({}, file)  
+        
+        try:
+            with open(self.FILE_NAME, "r") as file:
+                content = file.read().strip()
+                
+                # Se o arquivo estiver vazio, inicializa com um dicionário vazio
+                if not content:
+                    print("DEBUG - Arquivo tasks.txt está vazio. Inicializando tarefas.")
+                    self.tasks = {}
+                else:
+                    self.tasks = json.loads(content) 
+                    print("DEBUG - Tarefas carregadas:", self.tasks)
+                    
+        except json.JSONDecodeError as e:
+            print(f"ERRO - Falha ao carregar JSON: {e}. Criando um novo arquivo...")
+            self.tasks = {}
+            with open(self.FILE_NAME, "w") as file:
+                json.dump(self.tasks, file)  # Recria o arquivo vazio
+                
+    def display_tasks(self):
+        
+        print("DEBUG - Tentando exibir tarefas:", self.tasks)  # Debugging
+        self.task_listbox.delete(0, tk.END) # clear 
+        
+        if not self.tasks:
+            print("DEBUG - Nenhuma tarefa encontrada.")  # Debugging
+            return
+        
+        for task_id, task_desc in self.tasks.items():
+            #DEBUG
+            print("DEBUG - Tarefas carregadas: ", self.tasks)
+            self.task_listbox.insert(tk.END, f"{task_id}: {task_desc}")
     
     def save_tasks(self):
         # salva as tarefas no arquivo
