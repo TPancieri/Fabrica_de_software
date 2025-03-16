@@ -12,7 +12,7 @@ class Planner:
     def __init__(self, root):
         self.root = root
         self.root.title("Gerenciador de Tarefas")
-        self.root.geometry("400x500")
+        self.root.geometry("500x600")
         
         
         self.tasks = {}
@@ -40,9 +40,15 @@ class Planner:
         self.load_button = tk.Button(button_frame, text="Carregar Tarefas", command=self.display_tasks)
         self.load_button.pack(side=tk.LEFT, padx=10)
         
-        # Botão para atualizar tarefa
+        # Botão para atualizar Tarefa
         self.update_button = tk.Button(button_frame, text="Atualizar Tarefa", command=self.update_task_popup)
         self.update_button.pack(side=tk.LEFT, padx=10)
+        
+        # Botão para Deletar Tarefa
+        self.delete_button = tk.Button(button_frame, text="Deletar Tarefa", command=self.delete_task_popup)
+        self.delete_button.pack(side=tk.LEFT, padx=10)
+        
+        self.display_tasks()
 
     def load_tasks(self):
         if not os.path.exists(self.FILE_NAME):
@@ -140,78 +146,39 @@ class Planner:
         # Update Button
         update_button = tk.Button(update_window, text="Atualizar", command=update_task)
         update_button.pack(pady=10)
+
+    def delete_task_popup(self):
+        # Nova Janela
+        delete_window = tk.Toplevel(self.root)
+        delete_window.title("Deletar Tarefa")
     
-    #def read_tasks(self):
-        # Le as tarefas registradas no arquivo
-        #if not self.tasks:
-            #print("Nenhuma tarefa registrada / disponivel")
-            #return
+        task_id_label = tk.Label(delete_window, text="ID da Tarefa:")
+        task_id_label.pack(pady=5)
+        task_id_entry = tk.Entry(delete_window)
+        task_id_entry.pack(pady=5)
 
-        #print("\n Tarefas Atuais: ")
-        #for task_id, task_desc in self.tasks.items():
-            #print(f" {task_id}: {task_desc} ")
-        #print()
+        def delete_task():
+            task_id = task_id_entry.get().strip()
 
-    def update_task(self):
-        # Atualiza uma tarefa especificada no arquivo
-        task_id = input("Insira o ID que sera atualizado: ").strip()
-        if task_id not in self.tasks:
-            print("ID de tarefa não encontrada")
-            return
+            if not task_id or task_id not in self.tasks:
+                messagebox.showerror("Erro", "ID de tarefa não encontrado!")
+                return
         
-        new_desc = input("Insira a nova descrição: ").strip()
-        if not new_desc:
-            print("Descrição da tarefa não pode ser vazia")
-            return
+            # Confirmação
+            confirm = messagebox.askyesno("Confirmar Deleção", f"Você tem certeza que deseja deletar a tarefa '{task_id}'?")
         
-        self.tasks[task_id] = new_desc
-        self.save_tasks()
-        print(f"Tarefa '{task_id}' atualizada com sucesso")
+            if confirm:
+                del self.tasks[task_id]
+                self.save_tasks()  
+                messagebox.showinfo("Sucesso", f"Tarefa '{task_id}' deletada com sucesso!")
 
-    def delete_task(self):
-        # deleta uma ID do arquivo
-        # Adicionar segunda camada de confirmação / proteção pra não deixar deletar por erro
-        task_id = input("Insira a ID para ser deletada: ").strip()
-        if task_id not in self.tasks:
-            print("ID de tarefa não encontrada")
-            return
-        
-        del self.tasks[task_id]
-        self.save_tasks()
-        print(f"Tarefa '{task_id} deletada com sucesso'")
-    
-    def exit_program(self):
-        self.clear_screen()
-        print("Fechando o Planner")
-        exit()
+                self.display_tasks()
 
-    def menu(self):
-        options = {
-            "1": self.create_task,
-            "2": self.read_tasks,
-            "3": self.update_task,
-            "4": self.delete_task,
-            "5": self.exit_program
-        }
+                delete_window.destroy()  # Fecha janela
 
-        while True:
-            # self.clear_screen()
-            print("\n Aplicativo Planner")
-            print("1. Criar Tarefa")
-            print("2. Ver Tarefas")
-            print("3. Atualizar Tarefas")
-            print("4. Deletar Tarefas")
-            print("5. Sair")
+        delete_button = tk.Button(delete_window, text="Deletar", command=delete_task)
+        delete_button.pack(pady=10)
 
-            choice = input("Escolha uma opção: ").strip()
-            action = options.get(choice)
-
-            if action:
-                self.clear_screen()
-                action()
-            else:
-                print("Opção invalada tente novamente")
-            
 
 if __name__ == "__main__":
     root = tk.Tk()
