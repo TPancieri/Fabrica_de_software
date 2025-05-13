@@ -2,8 +2,12 @@ import os, json
 import tkinter as tk
 from tkinter import messagebox, simpledialog
 
-#TODO implementar visual
-#TODO tag de progresso? não iniciado/ em andamento/ concluido 
+#TODO melhorar a implementação visual (layout, botões, icones)
+#TODO separar as tarefas em 3 colunas / listas : Backlog, Em Andamento, Concluido
+#TODO Fazer conexão com banco de dados (retirar arquivo txt)
+#TODO Adicionar confirmação para deletar um arquivo
+#TODO Deixar o ID das tarefas Auto increment - não permitir o usuário alterar
+#TODO Talvez implementar um sistema de login, agregando tarefa por usuário
 
 class Planner:
 
