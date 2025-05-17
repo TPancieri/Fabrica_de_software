@@ -19,10 +19,10 @@ Um aplicativo de gerenciamento de tarefas desenvolvido em Python com interface g
 
 1. Execute o aplicativo:
 
-##Autores
+## Autores
 
 Thiago Godinho Pancieri ;
 Rafael Ferraresso de Freitas ;
-Gabryel Gomes Linhares ;
 Victor Hugo Mendes de Sousa ;
 Nathália Chaves Teixeira ;
+Gabryel Gomes Linhares ;
