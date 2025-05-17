@@ -14,12 +14,13 @@ Um aplicativo de gerenciamento de tarefas desenvolvido em Python com interface g
 ## Instalação
 
 1. Clone o repositório:
-2. 
+
 ## Uso
 
 1. Execute o aplicativo:
 
 ##Autores
+
 Thiago Godinho Pancieri ;
 Rafael Ferraresso de Freitas ;
 Gabryel Gomes Linhares ;
