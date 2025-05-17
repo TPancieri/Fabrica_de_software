@@ -1,0 +1,11 @@
+ID,Título,Descrição,Status,Tag,Data Limite,Prioridade
+1,Relatório Mensal,Preparar relatório financeiro do mês de maio,em andamento,financeiro,25/05/2025,alta
+2,Reunião com Cliente,Apresentação do novo projeto para cliente XYZ,não iniciado,reuniões,31/05/2025,média
+3,Atualizar Site,Adicionar novas funcionalidades ao site da empresa,em andamento,desenvolvimento,15/06/2025,média
+4,Backup do Sistema,Realizar backup completo do banco de dados,concluído,manutenção,30/05/2025,alta
+5,Treinamento Equipe,Organizar treinamento sobre nova ferramenta,não iniciado,recursos humanos,05/07/2025,baixa
+6,Revisão de Código,Revisar pull requests pendentes do projeto principal,em andamento,desenvolvimento,20/06/2025,alta
+7,Planejamento Q3,Definir metas e objetivos para o terceiro trimestre,não iniciado,estratégia,28/07/2025,média
+8,Manutenção Servidores,Atualização de segurança dos servidores,não iniciado,infraestrutura,15/07/2025,alta
+9,Evento de Marketing,Organizar evento de lançamento do produto,em andamento,marketing,30/07/2025,média
+10,Documentação API,Atualizar documentação da API REST,não iniciado,desenvolvimento,10/08/2025,baixa 
