@@ -7,7 +7,7 @@ from config import COLOR_SCHEME, TASK_STATUS
 from models import Task
 
 def create_menu(root, gui):
-    """Creates the main menu bar"""
+    """Cria a barra do menu principal"""
     menubar = tk.Menu(root, bg=COLOR_SCHEME['menubar_bg'], fg='white')
     root.config(menu=menubar)
     
@@ -30,7 +30,7 @@ def create_menu(root, gui):
     view_menu.add_command(label="Calendário", command=gui._show_calendar_view)
 
 def create_task_list(parent, gui):
-    """Creates the task list with Treeview"""
+    """Cria a lista de tarefas"""
     frame_list = ttk.Frame(parent)
     parent.add(frame_list, weight=3)
 
@@ -121,7 +121,7 @@ def create_task_list(parent, gui):
     return frame_list
 
 def create_task_form(parent, gui):
-    """Creates the task form"""
+    """Cria o formularia de tarefa"""
     frame_form = ttk.LabelFrame(parent, text="Detalhes da Tarefa", padding=(20, 10))
     parent.add(frame_form, weight=1)
 
@@ -161,7 +161,7 @@ def create_task_form(parent, gui):
     return frame_form
 
 def create_form_buttons(parent, gui):
-    """Creates the form buttons"""
+    """Cria os botões do formulario"""
     btn_frame = ttk.Frame(parent)
     btn_frame.grid(row=6, column=0, columnspan=2, pady=20, sticky='ew')
     
@@ -179,7 +179,7 @@ def create_form_buttons(parent, gui):
         btn.grid(row=idx, column=0, padx=5, pady=3, sticky='ew')
 
 def create_button(parent, text, command):
-    """Creates a styled button"""
+    """Cria um botão estilizado"""
     btn = tk.Button(
         parent,
         text=text,
