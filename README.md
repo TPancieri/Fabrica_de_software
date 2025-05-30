@@ -128,6 +128,13 @@ O banco de dados é criado vazio e não possui dados iniciais. Os dados são ins
 - As tarefas são salvas localmente no arquivo `tasks.db`
 - O sistema suporta exportação e importação de dados em formato CSV
 
+# Documentação do Sistema Task Planner
+
+A documentação completa do projeto pode ser encontrada no google docs:
+
+https://docs.google.com/document/d/1qNxVsIK2FHVnrFcn94zLi7cIsgK7EcF8/edit
+
+
 ## Autores
 
 - Thiago Godinho Pancieri
