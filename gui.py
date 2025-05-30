@@ -33,7 +33,12 @@ class PlannerGUI:
         screen_width = self.root.winfo_screenwidth()
         screen_height = self.root.winfo_screenheight()
         self.root.geometry(f"{screen_width}x{screen_height}+0+0")
-        self.root.state('zoomed')
+        
+        # Fix para o linux
+        try:
+            self.root.state('zoomed')  # Windows
+        except tk.TclError:
+            self.root.attributes('-zoomed', True)  # Linux
         
         # Criação do menu
         create_menu(self.root, self)
