@@ -29,6 +29,29 @@ Um aplicativo de gerenciamento de tarefas com interface gráfica desenvolvido em
 pip install -r requirements.txt
 ```
 
+## Configuração para Linux
+
+Para executar o aplicativo em sistemas Linux, alguns passos adicionais são necessários:
+
+1. Instale o locale pt_BR.UTF-8:
+```bash
+sudo locale-gen pt_BR.UTF-8
+sudo update-locale
+```
+
+2. Instale o Python e tkinter (caso ainda não estejam instalados):
+```bash
+sudo apt-get update
+sudo apt-get install python3 python3-tk
+```
+
+3. Certifique-se que o diretório onde o aplicativo será executado tem permissões de escrita:
+```bash
+chmod u+w .
+```
+
+4. Se estiver executando em um servidor sem interface gráfica, certifique-se que um servidor de display (X11 ou Wayland) está em execução.
+
 ## Como Executar
 
 Execute o arquivo principal:
