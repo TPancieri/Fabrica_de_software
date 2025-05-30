@@ -29,28 +29,47 @@ Um aplicativo de gerenciamento de tarefas com interface gráfica desenvolvido em
 pip install -r requirements.txt
 ```
 
-## Configuração para Linux
+## Instalação no Linux
 
-Para executar o aplicativo em sistemas Linux, alguns passos adicionais são necessários:
+Para executar o aplicativo no Linux, siga estes passos:
 
-1. Instale o locale pt_BR.UTF-8:
+### 1. Configuração do Ambiente Virtual (Recomendado)
 ```bash
+# Instalar o pacote para criar ambientes virtuais
+sudo apt install python3-venv
+
+# Criar um ambiente virtual
+python3 -m venv venv
+
+# Ativar o ambiente virtual
+source venv/bin/activate
+
+# Instalar as dependências Python
+pip install -r requirements.txt
+```
+
+### 2. Dependências do Sistema
+
+#### Para a Interface Gráfica (Tkinter)
+```bash
+# Instalar o Tkinter
+sudo apt-get update && sudo apt-get install python3-tk
+```
+
+#### Para o Suporte ao Português Brasileiro
+```bash
+# Gerar e configurar o locale pt_BR.UTF-8
 sudo locale-gen pt_BR.UTF-8
-sudo update-locale
-```
+sudo update-locale LANG=pt_BR.UTF-8
 
-2. Instale o Python e tkinter (caso ainda não estejam instalados):
-```bash
-sudo apt-get update
-sudo apt-get install python3 python3-tk
-```
+# Adicionar as seguintes linhas ao seu arquivo ~/.bashrc ou ~/.profile:
+echo 'export LANG=pt_BR.UTF-8' >> ~/.bashrc
+echo 'export LANGUAGE=pt_BR:pt' >> ~/.bashrc
+echo 'export LC_ALL=pt_BR.UTF-8' >> ~/.bashrc
 
-3. Certifique-se que o diretório onde o aplicativo será executado tem permissões de escrita:
-```bash
-chmod u+w .
+# Recarregar as configurações do shell
+source ~/.bashrc
 ```
-
-4. Se estiver executando em um servidor sem interface gráfica, certifique-se que um servidor de display (X11 ou Wayland) está em execução.
 
 ## Como Executar
 
