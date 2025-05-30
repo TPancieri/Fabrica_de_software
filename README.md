@@ -11,11 +11,15 @@ Um aplicativo de gerenciamento de tarefas com interface gráfica desenvolvido em
 - Exportar e importar tarefas em formato CSV
 - Interface gráfica moderna e intuitiva
 
-## Requisitos
+## Requisitos Técnicos
 
+### Versões das Linguagens e Frameworks
 - Python 3.7 ou superior
-- tkinter (geralmente vem com Python)
-- tkcalendar
+- SQLite 3 (incluído no Python)
+- tkinter (incluído no Python)
+
+### Dependências Externas
+- tkcalendar==1.6.1
 
 ## Instalação
 
@@ -41,11 +45,46 @@ python main.py
 - `gui.py` - Interface gráfica principal
 - `gui_components.py` - Componentes reutilizáveis da interface
 
+## Esquema do Banco de Dados
+
+O sistema utiliza SQLite como banco de dados. O arquivo `tasks.db` é criado automaticamente na primeira execução.
+
+### Tabela: tasks
+
+```sql
+CREATE TABLE IF NOT EXISTS tasks (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    titulo       TEXT NOT NULL,
+    description  TEXT NOT NULL,
+    status       TEXT NOT NULL DEFAULT 'não iniciado',
+    tag         TEXT,
+    due_date    DATE,
+    priority    TEXT DEFAULT 'média'
+);
+```
+
+### Campos da Tabela
+
+- `id`: Identificador único da tarefa (auto-incrementado)
+- `titulo`: Título da tarefa (obrigatório)
+- `description`: Descrição detalhada da tarefa (obrigatório)
+- `status`: Status atual da tarefa (padrão: 'não iniciado')
+  - Valores possíveis: 'não iniciado', 'em andamento', 'concluído'
+- `tag`: Tag opcional para categorização
+- `due_date`: Data limite para conclusão (formato: DD/MM/YYYY)
+- `priority`: Nível de prioridade (padrão: 'média')
+  - Valores possíveis: 'baixa', 'média', 'alta'
+
+### Dados Iniciais
+
+O banco de dados é criado vazio e não possui dados iniciais. Os dados são inseridos através da interface gráfica ou importação de CSV.
+
 ## Notas
 
 - O banco de dados SQLite será criado automaticamente na primeira execução
 - A localização está configurada para pt_BR
 - As tarefas são salvas localmente no arquivo `tasks.db`
+- O sistema suporta exportação e importação de dados em formato CSV
 
 ## Autores
 
